@@ -1,28 +1,24 @@
 xList = []
-fList = []
-result = 1
+endList = []
+endResult = 1
 inputList = []
+
 while True:
-    answer = input("Enter your number or to stop, type 'stop'.\n: ")
+    answer = input("Enter your number or to stop, type 'stop'.\n: ")  # Ask answer to:
     if answer != "stop":
-        inputList.append(answer)
+        inputList.append(answer)  # 1)add inputted number to inputList.
     else:
-        break
+        break  # 2)stop the input question and continue.
 
 
-def finder(number):
-    xList = []
+def primeFactorFinder(number):  # To find the primefactors of input: number and return them in a list.
     aList = []
-    scd = []
+    pfList = []
     while True:
         divider = number
         while divider > 1:
             if (number / divider) % 1.0 == 0.0 and number % divider == 0:
-                #print("({0} / {1}) % 1.0 == 0.0 and {0} % {1} == 0".format(number, divider))
-                #print((number / divider) % 1.0 == 0.0 and number % divider == 0)
-                print(divider)
                 aList.append(divider)
-                print(aList)
                 divider -= 1
                 continue
             else:
@@ -31,44 +27,41 @@ def finder(number):
         aList.sort()
         result = aList[0]
         aList = []
-        scd.append(int(result))
-        print(result)
+        pfList.append(int(result))
+        # print(result)
         number /= result
-        print("{}\n".format(number))
+        # print("{}\n".format(number))
         if number == 1:
             break
-    return scd
+    return pfList
+
 
 # ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
-def adder(aList):
+def adder(aList):  # To add the found primefactors to a list which can be used later.
     while True:
-        number = aList[0]
-        count = aList.count(number)
-        aList.remove(number)
-        fCount = fList.count(number)
-        print("{0}\n{1}\n{2}\n".format(number, count, fCount))
+        currentNumber = aList[0]
+        count = aList.count(currentNumber)
+        aList.remove(currentNumber)
+        fCount = endList.count(currentNumber)
+        print("{0}\n{1}\n{2}\n".format(currentNumber, count, fCount))
         if count > fCount:
             for i in range(count - fCount):
-                fList.append(number)
+                endList.append(currentNumber)
         if len(aList) == 0:
-            return fList
+            return endList
+
 
 # ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
+
 for i in inputList:
-    xList = finder(int(i))
-    fList = adder(xList)
+    pfList = primeFactorFinder(int(i))
+    endList = adder(pfList)
 
-#xList = finder(x)
-#yList = finder(y)
-#fList = adder(xList)
-#fList = adder(yList)
+for numbers in endList:
+    endResult *= numbers
 
-#print(fList)
-for number in fList:
-    result *= number
-
-print(result)
+print(endResult)
 
 input("press enter to continue")
